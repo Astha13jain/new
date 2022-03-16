@@ -12,13 +12,15 @@ public class E_Commerce {
 	public static String baseurl = "https://ecommerceservice.herokuapp.com";
 	public static String message;
 	public static String accessToken;
+	public static String UserId;
+	public static String EmailId;
 		@Test(priority = 0)
 		public void signup()
 		{
 			RestAssured.baseURI =baseurl;
 			
 		String 	requestbody = "{\r\n"
-				+ "	\"email\": \"jjj1lllaaainastha13@gmail.com\",\r\n"
+				+ "	\"email\": \"jjjjssahil@gmail.com\",\r\n"
 				+ "	\"password\": \"krishna@123\"\r\n"
 				+ "}";
 
@@ -52,7 +54,7 @@ public class E_Commerce {
 			RestAssured.baseURI =baseurl;
 			
 		String 	requestbody = "{\r\n"
-				+ "	\"email\": \"jjj1lllaaainastha13@gmail.com\",\r\n"
+				+ "	\"email\": \"jjjjssahil@gmail.com\",\r\n"
 				+ "	\"password\": \"krishna@123\"\r\n"
 				+ "}";
 		
@@ -76,4 +78,53 @@ public class E_Commerce {
 		System.out.println(accessToken);
 
 }
+		@Test(priority=2)
+		
+		public void getAllUser()
+		{
+			RestAssured.baseURI=baseurl;
+			Response resposne = given()
+					.header("Content-Type","application/json")
+					.header("Authorization","bearer "+accessToken)
+					
+					
+					.when()
+					.get("/user")
+					
+					.then()
+					//.contentType(ContentType.JSON)
+					.assertThat().statusCode(200).contentType(ContentType.JSON)
+					.extract().response();	
+			String jsonresponse = resposne.asString();
+			JsonPath js = new JsonPath(jsonresponse);
+			System.out.println(jsonresponse);
+			UserId=js.get("users[50]._id");
+			System.out.println("user[50] "+UserId);
+			EmailId=js.get("users[50].email");
+			System.out.println("user[50] "+EmailId);
+		}
+		@Test(priority=3)
+		public void delete()
+		{
+			RestAssured.baseURI=baseurl;
+			Response resposne = given()
+					.header("Content-Type","application/json")
+					.header("Authorization","bearer "+accessToken)
+					
+					
+					.when()
+					.delete("/user/"+UserId)
+					
+					.then()
+					//.contentType(ContentType.JSON)
+					.assertThat().statusCode(200).contentType(ContentType.JSON)
+					.extract().response();
+			String jsonresponse = resposne.asString();
+			JsonPath js = new JsonPath(jsonresponse);
+			message=js.getString("message");
+			System.out.println(message);
+			System.out.println("user holding this id got deleted "+EmailId);
+		}
+		
+		
 	}
