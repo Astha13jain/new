@@ -20,6 +20,10 @@ public class DiffNG {
 		public void testcase1()
 		{
 			System.out.println("First method");
+			System.out.println("astha");
+			System.out.println("astha");
+			System.out.println("astha");
+			System.out.println("astha");
 		}
 		
 		@AfterTest
