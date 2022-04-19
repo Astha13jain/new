@@ -10,5 +10,7 @@ public class gitt {
 		System.out.println("astha");
 		System.out.println("astha");
 		System.out.println("astha");
+		System.out.println("astha");
+		System.out.println("astha");
 }
 }
